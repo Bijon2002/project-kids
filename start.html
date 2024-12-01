@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Quiz Fun - Home</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #fce4ec;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #ff4081;
+            text-shadow: 2px 2px #ff80ab;
+        }
+        input {
+            font-size: 1.2rem;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ff4081;
+            width: 200px;
+        }
+        button {
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px #d32f2f;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px #d32f2f;
+        }
+        button:active {
+            transform: scale(0.9);
+            box-shadow: 0 2px #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kids Quiz Fun</h1>
+        <p>Welcome! Please enter your name to start the quiz.</p>
+        
+        <input type="text" id="username" placeholder="Enter your name" required>
+        <button onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <script>
+        // Store the user's name in localStorage and start the quiz
+        function startQuiz() {
+            const username = document.getElementById('username').value;
+            if (username.trim() === "") {
+                alert("Please enter a valid name.");
+                return;
+            }
+            localStorage.setItem("username", username);  // Save the username
+            window.location.href = "index.html";  // Redirect to the first quiz page
+        }
+    </script>
+</body>
+</html>

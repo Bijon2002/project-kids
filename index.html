@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Quiz Fun</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #fce4ec;
+            color: #333;
+            margin: 0;
+            padding: 0;
+       
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #ff4081;
+            text-shadow: 2px 2px #ff80ab;
+        }
+        p {
+            font-size: 1.2rem;
+        }
+        .quiz-image {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .quiz-image img {
+            max-width: 100%;
+            border: 5px solid #ff80ab;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 128, 171, 0.7);
+            height: 300px;
+            width: 300px;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        button {
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            box-shadow: 0 4px #d32f2f;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px #d32f2f;
+        }
+        button:active {
+            transform: scale(0.9);
+            box-shadow: 0 2px #d32f2f;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #d32f2f;
+        }
+        #music-controls {
+            margin: 20px 0;
+        }
+        .next-button {
+            margin-top: 20px;
+            display: none;
+        }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    
+    </style>
+</head>
+<body>
+    <audio id="background-music" loop>
+        <source src="kids.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container">
+        <h1>Kids Quiz Fun</h1>
+        <div id="welcome-message"></div>
+
+        <p id="question">Answer the question below and have fun!</p>
+
+        <div class="quiz-image">
+            <img src="on the table.webp" alt="Quiz Illustration" id="quiz-image">
+        </div>
+
+        <p><strong>Where is the book?</strong></p>
+        
+        <div class="buttons">
+            <button onmouseover="speak('On the Table')" onclick="checkAnswer('on')">On the Table</button>
+            <button onmouseover="speak('Under the Table')" onclick="checkAnswer('under')">Under the Table</button>
+            <button onmouseover="speak('Near the Table')" onclick="checkAnswer('near')">Near the Table</button>
+            <button onmouseover="speak('Between the Table and the Chair')" onclick="checkAnswer('between')">Between the Table and the Chair</button>
+        </div>
+
+        <div id="music-controls">
+            <button onclick="playMusic()">Play Music</button>
+            <button onclick="pauseMusic()">Pause Music</button>
+        </div>
+
+        <br>
+        <button  ><a href="start.html">home</a></button>
+
+        <div class="result" id="result"></div>
+
+        <div class="next-button" id="next-button">
+            <button onclick="goToNextQuiz()">Next Quiz ➡️</button>
+        </div>
+    </div>
+
+    <script>
+       // let userName = localStorage.getItem("username"); // Get username from localStorage
+        let score = 0;
+
+      //  if (!userName) {
+           // alert("Name not found! Please start the quiz from the home page.");
+          //  window.location.href = "index.html";
+       // }
+
+      //  document.getElementById('welcome-message').innerHTML = `<p>Welcome, ${userName}! Let's start the quiz!</p>`;
+       // speak(`Welcome, ${userName}. Let's start the quiz!`);
+
+        const music = document.getElementById('background-music');
+        function playMusic() {
+            music.play().catch((error) => {
+                console.error("Music playback failed: ", error);
+            });
+        }
+
+        function pauseMusic() {
+            music.pause();
+        }
+
+        function checkAnswer(answer) {
+            const correctAnswer = 'on';
+            const result = document.getElementById('result');
+            const nextButton = document.getElementById('next-button');
+
+            if (answer === correctAnswer) {
+                result.innerHTML = `🎉 Correct, ${userName}! Great job! 🎉`;
+                result.style.color = "#4CAF50"; // Green for correct
+                score++;
+                speak(`Correct, ${userName}! Great job!`);
+            } else {
+                result.innerHTML = `❌ Oops, ${userName}! Try again. ❌`;
+                result.style.color = "#d32f2f"; // Red for incorrect
+                speak(`Oops, ${userName}! Try again.`);
+            }
+
+            nextButton.style.display = 'block'; // Show Next button
+        }
+
+        function speak(text) {
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'en-US';
+            speech.pitch = 1;
+            speech.rate = 1;
+            speech.volume = 1;
+            window.speechSynthesis.speak(speech);
+        }
+
+        window.onload = function () {
+            const questionText = "Where is the book?";
+            speak(questionText);
+        };
+
+        function goToNextQuiz() {
+            window.location.href = "index2.html"; // Redirect to next quiz page
+        }
+    </script>
+</body>
+</html>

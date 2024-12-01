@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Quiz - Kids Quiz Fun</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #f3e5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #9c27b0;
+            text-shadow: 2px 2px #ba68c8;
+        }
+        p {
+            font-size: 1.2rem;
+        }
+        .quiz-image {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .quiz-image img {
+            max-width: 100%;
+            border: 5px solid #ba68c8;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(186, 104, 200, 0.7);
+            height: 300px;
+            width: 300px;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        button {
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #9c27b0;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            box-shadow: 0 4px #7b1fa2;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px #7b1fa2;
+        }
+        button:active {
+            transform: scale(0.9);
+            box-shadow: 0 2px #7b1fa2;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #d32f2f;
+        }
+        #music-controls {
+            margin: 20px 0;
+        }
+        .next-button {
+            margin-top: 20px;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <audio id="background-music" loop>
+        <source src="kids.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container">
+        <h1>Kids Quiz Fun</h1>
+        <p id="question">Answer the question below and have fun!</p>
+
+        <div class="quiz-image">
+            <img src="between.webp" alt="Quiz Illustration" id="quiz-image">
+        </div>
+
+        <p><strong>Where is the ball?</strong></p>
+
+        <div class="buttons">
+            <button onmouseover="speak('On the sofa')" onclick="checkAnswer('on')">On the Sofa</button>
+            <button onmouseover="speak('Under the sofa')" onclick="checkAnswer('under')">Under the Sofa</button>
+            <button onmouseover="speak('Near the sofa')" onclick="checkAnswer('near')">Near the Sofa</button>
+            <button onmouseover="speak('Between the sofa and the table')" onclick="checkAnswer('between')">Between the Sofa and the Table</button>
+            
+            
+        </div>
+      
+<br><br>
+        <div id="music-controls">
+            <button onclick="playMusic()">Play Music</button>
+            <button onclick="pauseMusic()">Pause Music</button>
+        </div>
+
+        <br>
+        <button  ><a href="start.html">home</a></button>
+
+        <div class="result" id="result"></div>
+
+        <div id="final-message" style="display:none;">
+            <p>Thank you for participating!</p>
+            <p>Your final score is: <span id="final-score"></span></p>
+        </div>
+    </div>
+
+    <script>
+        const music = document.getElementById('background-music');
+        let score = 0;
+        let questionAnswered = 0;
+
+        // Function to play music
+        function playMusic() {
+            music.play().catch((error) => {
+                console.error("Music playback failed: ", error);
+            });
+        }
+
+        // Function to pause music
+        function pauseMusic() {
+            music.pause();
+        }
+
+        // Function to check the answer
+        function checkAnswer(answer) {
+            const correctAnswer = 'between';
+            const result = document.getElementById('result');
+
+            if (questionAnswered === 0) {
+                // 1st correct answer
+                if (answer === correctAnswer) {
+                    score += 10;
+                    result.innerHTML = "🎉 Correct! Great job! 🎉";
+                    result.style.color = "#4CAF50"; // Green for correct
+                    speak("Correct! Great job!");
+                } else {
+                    result.innerHTML = "❌ Oops! Try again. ❌";
+                    result.style.color = "#d32f2f"; // Red for incorrect
+                    speak("Oops! Try again.");
+                }
+            } else if (questionAnswered === 1) {
+                // 2nd correct answer
+                if (answer === correctAnswer) {
+                    score += 5;
+                    result.innerHTML = "🎉 Correct! Great job! 🎉";
+                    result.style.color = "#4CAF50";
+                    speak("Correct! Great job!");
+                } else {
+                    result.innerHTML = "❌ Oops! Try again. ❌";
+                    result.style.color = "#d32f2f";
+                    speak("Oops! Try again.");
+                }
+            } else if (questionAnswered === 2) {
+                // 3rd correct answer
+                if (answer === correctAnswer) {
+                    score += 2;
+                    result.innerHTML = "🎉 Correct! Great job! 🎉";
+                    result.style.color = "#4CAF50";
+                    speak("Correct! Great job!");
+                } else {
+                    result.innerHTML = "❌ Oops! Try again. ❌";
+                    result.style.color = "#d32f2f";
+                    speak("Oops! Try again.");
+                }
+            }
+
+            questionAnswered++;
+            if (questionAnswered === 3) {
+                showFinalMessage();
+            }
+        }
+
+        // Function to show final message and score
+        function showFinalMessage() {
+            document.getElementById('final-message').style.display = 'block';
+            document.getElementById('final-score').textContent = score;
+        }
+
+        // Voice Assistance Function
+        function speak(text) {
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            speech.lang = 'en-US'; // Language
+            speech.pitch = 1; // Pitch of the voice
+            speech.rate = 1; // Speed
+            speech.volume = 1; // Volume (1 is max)
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
